@@ -5,6 +5,7 @@ AudioPlayer[] players = new AudioPlayer[3];
 boolean[] isPlaying = new boolean[3];
 boolean[] isMuted = new boolean[3];
 float[] restartButtonX = new float[3];
+int currentSong = 0; // Track the current playing song
 
 void setup() {
   size(900, 700);
@@ -75,6 +76,11 @@ float createUI(float x, float y, AudioPlayer player, int songNumber) {
 
 void draw() {
   // Your drawing code here
+ fill(255);
+  textSize(16);
+  textAlign(LEFT, BOTTOM);
+  text("Press 'P' to go to the Previous Song", 10, height - 30);
+  text("Press 'N' to go to the Next Song", 10, height - 10);
 }
 
 void mousePressed() {
@@ -150,4 +156,38 @@ void goBack15Seconds(AudioPlayer player, boolean isPlaying) {
   if (isPlaying) {
     player.skip(-15); // Go back 15 seconds
   }
+}
+
+void keyPressed() {
+  if (key == 'N' || key == 'n') {
+    skipSong();
+} else if (key == 'P' || key == 'p') {
+    goBackSong();
+  }
+}
+
+void goBackSong() {
+  // Stop the current song
+  players[currentSong].close();
+
+  // Decrement the currentSong index
+  currentSong = (currentSong - 1 + players.length) % players.length;
+
+  // Load and play the previous song
+  players[currentSong].rewind();
+  players[currentSong].play();
+  isPlaying[currentSong] = true;
+}
+
+void skipSong() {
+  // Stop the current song
+  players[currentSong].close();
+
+  // Increment the currentSong index
+  currentSong = (currentSong + 1) % players.length;
+
+  // Load and play the next song
+  players[currentSong].rewind();
+  players[currentSong].play();
+  isPlaying[currentSong] = true;
 }
