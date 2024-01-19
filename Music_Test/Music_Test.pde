@@ -63,13 +63,25 @@ float createUI(float x, float y, AudioPlayer player, int songNumber) {
   textAlign(CENTER, CENTER);
   textSize(16);
   text("Go Back 15s", goBackButtonX + buttonWidth / 2, y + buttonHeight / 2);
-
+  
   // Mute button
   float muteButtonX = width - buttonWidth - 20;
   fill(255);
   rect(muteButtonX, y, buttonWidth, buttonHeight);
   fill(0);
   text("Mute", muteButtonX + buttonWidth / 2, y + buttonHeight / 2);
+  
+  // Rectangle between Go Back 15s and Mute button
+  float rectangleX = goBackButtonX + buttonWidth + 20;
+  float rectangleWidth = muteButtonX - rectangleX;
+  fill(200); // Adjust color as needed
+  rect(rectangleX, y, rectangleWidth, buttonHeight);
+  
+  // Text inside the rectangle
+  fill(0);
+  textAlign(CENTER, CENTER);
+  textSize(16);
+  text("RickRoll", rectangleX + rectangleWidth / 2, y + buttonHeight / 2);
 
   return restartButtonX;
 }
